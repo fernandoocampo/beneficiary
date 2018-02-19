@@ -11,5 +11,58 @@ package com.example.beneficiary.model;
  * @author fernando.ocampo
  */
 public class Beneficiary {
-    
+    private String id;
+    private String code;
+    private String forename;
+    private String lastname;
+    private String relationship;
+    private String affiliateId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    public String getAffiliateId() {
+        return affiliateId;
+    }
+
+    public void setAffiliateId(String affiliateId) {
+        this.affiliateId = affiliateId;
+    }
 }

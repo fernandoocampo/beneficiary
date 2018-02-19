@@ -5,13 +5,17 @@
  */
 package com.example.beneficiary.model;
 
+import java.util.List;
+
 /**
  *
- * @author luisfer
+ * @author fernando.ocampo
+ * @param <T> Type for items in the result list.
  */
-public class Result {
+public class Result<T> {
     private String code;
     private String message;
+    private List<T> data;
 
     public Result() {
     }
@@ -35,5 +39,13 @@ public class Result {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
     }
 }

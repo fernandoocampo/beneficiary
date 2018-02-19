@@ -11,5 +11,16 @@ package com.example.beneficiary.model;
  * @author fernando.ocampo
  */
 public class Filter {
-    
+    /**
+     * It is the affiliate id.
+     */
+    private String affiliateId;
+
+    public String getAffiliateId() {
+        return affiliateId;
+    }
+
+    public void setAffiliateId(String affiliateId) {
+        this.affiliateId = affiliateId;
+    }
 }
