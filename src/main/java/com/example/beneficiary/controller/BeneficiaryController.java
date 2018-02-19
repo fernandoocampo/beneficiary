@@ -6,9 +6,11 @@
 package com.example.beneficiary.controller;
 
 import com.example.beneficiary.model.Beneficiary;
+import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +26,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/beneficiaries")
 public class BeneficiaryController {
     
+    @RequestMapping(value = "", method = RequestMethod.GET, 
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Result> search(@RequestBody Filter filter) {
+        return null;
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
+        return null;
+    }
+    
     @RequestMapping(value = "", method = RequestMethod.POST, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> create(@RequestBody Beneficiary beneficiary) {
+        return null;
+    }
+    
+    @RequestMapping(value = "", method = RequestMethod.PUT, 
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Result> update(@RequestBody Beneficiary beneficiary) {
+        return null;
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Result> delete(@PathVariable String id) {
         return null;
     }
 }
