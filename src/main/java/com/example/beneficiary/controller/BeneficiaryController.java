@@ -8,6 +8,8 @@ package com.example.beneficiary.controller;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
+import java.util.ArrayList;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +31,16 @@ public class BeneficiaryController {
     @RequestMapping(value = "", method = RequestMethod.GET, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> search(@RequestBody Filter filter) {
-        return null;
+        Result response = new Result();
+        response.setCode("100");
+        response.setData(new ArrayList());
+        response.setMessage("hola");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
-        return null;
+        return new ResponseEntity<>(new Result(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "", method = RequestMethod.POST, 

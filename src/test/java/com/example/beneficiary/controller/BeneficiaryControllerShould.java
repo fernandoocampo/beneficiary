@@ -62,35 +62,38 @@ public class BeneficiaryControllerShould {
      */
     @Test
     public void allow_to_search_by_affiliate_id() throws Exception {
-        // GIVEN
-        Filter filter = null;
+        // GIVEN the following request body
+        String requestbody = "{\"affiliateid\":\"0001\"}";
         String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":\"1\",\"code\":\"001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"},{\"id\":\"2\",\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}]}";
         
         // WHEN
         String request = "/beneficiaries";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request).
-                content("{\"affiliateid\":\"0001\"}").accept(MediaType.APPLICATION_JSON);
-        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isBadRequest()).andReturn();
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request)
+                .content(requestbody)
+                .contentType("application/json")
+                .accept(MediaType.ALL);
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
         // THEN
-        assertEquals(expected, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     /**
      * Test of getBeneficiary method, of class BeneficiaryController.
      */
     @Test
-    public void testGetBeneficiary() {
-        System.out.println("getBeneficiary");
-        String id = "";
-        BeneficiaryController instance = new BeneficiaryController();
-        ResponseEntity<Result> expResult = null;
-        ResponseEntity<Result> result = instance.getBeneficiary(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void get_beneficiary_by_id() throws Exception {
+        // GIVEN the following request to query an affiliatedid
+        String affiliatedid = "0001";
+        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        
+        // WHEN
+        String request = "/beneficiaries/{id}";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request, affiliatedid);
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        
+        // THEN
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     /**
