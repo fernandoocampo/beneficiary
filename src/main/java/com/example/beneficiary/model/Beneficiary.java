@@ -65,4 +65,13 @@ public class Beneficiary {
     public void setAffiliateId(String affiliateId) {
         this.affiliateId = affiliateId;
     }
+
+    @Override
+    public String toString() {
+        return "{" + "id=" + id + ", code=" + code + ", forename=" + forename + ", lastname=" + lastname + ", relationship=" + relationship + ", affiliateId=" + affiliateId + '}';
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(new Beneficiary());
+    }
 }

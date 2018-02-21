@@ -46,7 +46,7 @@ public class BeneficiaryController {
     @RequestMapping(value = "", method = RequestMethod.POST, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> create(@RequestBody Beneficiary beneficiary) {
-        return null;
+        return new ResponseEntity<>(new Result(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "", method = RequestMethod.PUT, 

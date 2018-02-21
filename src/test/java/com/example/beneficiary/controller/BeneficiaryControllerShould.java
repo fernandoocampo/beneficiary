@@ -100,45 +100,60 @@ public class BeneficiaryControllerShould {
      * Test of create method, of class BeneficiaryController.
      */
     @Test
-    public void testCreate() {
-        System.out.println("create");
-        Beneficiary beneficiary = null;
-        BeneficiaryController instance = new BeneficiaryController();
-        ResponseEntity<Result> expResult = null;
-        ResponseEntity<Result> result = instance.create(beneficiary);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void create_a_beneficiary() throws Exception {
+        // GIVEN the following request to create a beneficiary
+        String requestbody = "{\"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Ocampo\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
+        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        
+        // WHEN
+        String request = "/beneficiaries";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(request)
+                .content(requestbody)
+                .contentType("application/json")
+                .accept(MediaType.ALL);
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        
+        // THEN
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     /**
      * Test of update method, of class BeneficiaryController.
      */
     @Test
-    public void testUpdate() {
-        System.out.println("update");
-        Beneficiary beneficiary = null;
-        BeneficiaryController instance = new BeneficiaryController();
-        ResponseEntity<Result> expResult = null;
-        ResponseEntity<Result> result = instance.update(beneficiary);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void update_a_beneficiary() throws Exception {
+        // GIVEN the following request to create a beneficiary
+        String requestbody = "{\"id\":\"1003\", \"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Calero\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
+        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        
+        // WHEN
+        String request = "/beneficiaries";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(request)
+                .content(requestbody)
+                .contentType("application/json")
+                .accept(MediaType.ALL);
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        
+        // THEN
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     /**
      * Test of delete method, of class BeneficiaryController.
      */
     @Test
-    public void testDelete() {
-        System.out.println("delete");
-        String id = "";
-        BeneficiaryController instance = new BeneficiaryController();
-        ResponseEntity<Result> expResult = null;
-        ResponseEntity<Result> result = instance.delete(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void delete_a_beneficiary() throws Exception {
+        // GIVEN the following request to query an affiliatedid
+        String affiliatedid = "0001";
+        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        
+        // WHEN
+        String request = "/beneficiaries/{id}";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(request, affiliatedid);
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        
+        // THEN
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
     
 }
