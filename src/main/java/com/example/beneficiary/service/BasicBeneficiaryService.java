@@ -12,6 +12,7 @@ import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implements basic business logic for beneficiary service. It makes use of a
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author fernando.ocampo
  */
+@Service
 public class BasicBeneficiaryService implements BeneficiaryService {
     
     @Autowired
@@ -32,6 +34,7 @@ public class BasicBeneficiaryService implements BeneficiaryService {
     @Override
     public void create(Beneficiary beneficiary) throws BeneficiaryException {
         BeneficiaryServiceHelper.checkBeneficiaryData(beneficiary, false);
+        beneficiary.setState(1);
         dao.insert(beneficiary);
     }
 
