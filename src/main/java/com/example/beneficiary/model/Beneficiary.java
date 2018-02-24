@@ -24,6 +24,7 @@ public class Beneficiary {
     private String lastname;
     private String relationship;
     private String affiliateId;
+    private Integer state;
 
     public String getId() {
         return id;
@@ -71,6 +72,14 @@ public class Beneficiary {
 
     public void setAffiliateId(String affiliateId) {
         this.affiliateId = affiliateId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     @Override
