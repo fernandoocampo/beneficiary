@@ -8,7 +8,9 @@ package com.example.beneficiary.controller;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
+import com.example.beneficiary.service.BeneficiaryService;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/beneficiaries")
 public class BeneficiaryController {
+    
+    @Autowired
+    private BeneficiaryService service;
     
     @RequestMapping(value = "", method = RequestMethod.GET, 
             consumes = MediaType.APPLICATION_JSON_VALUE)

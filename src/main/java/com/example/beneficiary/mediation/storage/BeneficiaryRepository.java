@@ -6,6 +6,7 @@
 package com.example.beneficiary.mediation.storage;
 
 import com.example.beneficiary.model.Beneficiary;
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -20,7 +21,7 @@ public interface BeneficiaryRepository
     Beneficiary findBeneficiaryById(String id);
     
     @Query("{affiliateId:'?0'")
-    Beneficiary findBeneficiaryByAffiliateId(String affiliateId);
+    List<Beneficiary> findBeneficiaryByAffiliateId(String affiliateId);
     
     
 }
