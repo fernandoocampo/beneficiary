@@ -5,18 +5,26 @@
  */
 package com.example.beneficiary.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Models the data used for Beneficiaries.
  * 
  * @author fernando.ocampo
  */
+@Document(collection = "beneficiaries")
 public class Beneficiary {
+    @Id
     private String id;
+    @Indexed(unique = true)
     private String code;
     private String forename;
     private String lastname;
     private String relationship;
     private String affiliateId;
+    private Integer state;
 
     public String getId() {
         return id;
@@ -66,12 +74,16 @@ public class Beneficiary {
         this.affiliateId = affiliateId;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "{" + "id=" + id + ", code=" + code + ", forename=" + forename + ", lastname=" + lastname + ", relationship=" + relationship + ", affiliateId=" + affiliateId + '}';
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(new Beneficiary());
     }
 }
