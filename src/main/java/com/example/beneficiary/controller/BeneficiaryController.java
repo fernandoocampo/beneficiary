@@ -6,10 +6,12 @@
 package com.example.beneficiary.controller;
 
 import com.example.beneficiary.model.Beneficiary;
+import com.example.beneficiary.model.BeneficiaryException;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BeneficiaryService;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,32 +38,70 @@ public class BeneficiaryController {
     @RequestMapping(value = "", method = RequestMethod.GET, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> search(@RequestBody Filter filter) {
-        Result response = new Result();
-        response.setCode("100");
-        response.setData(new ArrayList());
-        response.setMessage("hola");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Result<List<Beneficiary>> response = new Result();
+        HttpStatus responseStatus = HttpStatus.OK;
+        try {
+            List<Beneficiary> data = service.search(filter);
+            response.setData(data);
+        } catch (BeneficiaryException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage());
+            response.setData(new ArrayList<>());
+            responseStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, responseStatus);
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
-        return new ResponseEntity<>(new Result(), HttpStatus.OK);
+        Result<Beneficiary> response = new Result();
+        Beneficiary data = service.findById(id);
+        response.setData(data);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @RequestMapping(value = "", method = RequestMethod.POST, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> create(@RequestBody Beneficiary beneficiary) {
-        return new ResponseEntity<>(new Result(), HttpStatus.OK);
+        Result<Beneficiary> response = new Result();
+        HttpStatus responseStatus = HttpStatus.OK;
+        try {
+            service.create(beneficiary);
+        } catch (BeneficiaryException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage());
+            responseStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, responseStatus);
     }
     
     @RequestMapping(value = "", method = RequestMethod.PUT, 
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> update(@RequestBody Beneficiary beneficiary) {
-        return null;
+        Result<Beneficiary> response = new Result();
+        HttpStatus responseStatus = HttpStatus.OK;
+        try {
+            service.update(beneficiary);
+        } catch (BeneficiaryException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage());
+            responseStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, responseStatus);
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Result> delete(@PathVariable String id) {
-        return null;
+        Result response = new Result();
+        HttpStatus responseStatus = HttpStatus.OK;
+        try {
+            service.delete(id);
+        } catch (BeneficiaryException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage()); 
+            response.setData(new ArrayList<>());
+            responseStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, responseStatus);
     }
 }

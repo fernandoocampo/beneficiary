@@ -5,8 +5,6 @@
  */
 package com.example.beneficiary.model;
 
-import java.util.List;
-
 /**
  *
  * @author fernando.ocampo
@@ -15,7 +13,7 @@ import java.util.List;
 public class Result<T> {
     private String code;
     private String message;
-    private List<T> data;
+    private T data;
 
     public Result() {
     }
@@ -41,11 +39,11 @@ public class Result<T> {
         this.message = message;
     }
 
-    public List<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(T data) {
         this.data = data;
     }
 

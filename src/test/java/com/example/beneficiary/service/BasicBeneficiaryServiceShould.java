@@ -7,8 +7,7 @@ package com.example.beneficiary.service;
 
 import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
 import com.example.beneficiary.model.Beneficiary;
-import com.example.beneficiary.model.Filter;
-import com.example.beneficiary.model.Result;
+import com.example.beneficiary.util.TestHelper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -68,9 +67,9 @@ public class BasicBeneficiaryServiceShould {
         String lastname = "Ocampo";
         String relationship = "son";
         String affiliateId = "1234-5678-9012";
-        Beneficiary newbeneficiary = createAnyBeneficiary(state, null, code, forename,
+        Beneficiary newbeneficiary = TestHelper.createAnyBeneficiary(state, null, code, forename,
                 lastname, relationship, affiliateId);
-        Beneficiary returnbeneficiary = createAnyBeneficiary(state, null, code, forename,
+        Beneficiary returnbeneficiary = TestHelper.createAnyBeneficiary(state, null, code, forename,
                 lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
@@ -97,9 +96,9 @@ public class BasicBeneficiaryServiceShould {
         String lastname = "Ocampo";
         String relationship = "son";
         String affiliateId = "1234-5678-9012";
-        Beneficiary newbeneficiary = createAnyBeneficiary(state, id, code, 
+        Beneficiary newbeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
                 forename, lastname, relationship, affiliateId);
-        Beneficiary returnbeneficiary = createAnyBeneficiary(state, id, code, 
+        Beneficiary returnbeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
                 forename, lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
@@ -111,20 +110,5 @@ public class BasicBeneficiaryServiceShould {
         // THEN must not be any error.
             fail("must not be any error and was threw this: " + ex.getMessage());
         }
-    }
-    
-    private Beneficiary createAnyBeneficiary(int state, String id, String code, 
-            String forename, String lastname, String relationship, 
-            String affiliateId) {
-        
-        Beneficiary beneficiary = new Beneficiary();
-        beneficiary.setId(id);
-        beneficiary.setCode(code);
-        beneficiary.setForename(forename);
-        beneficiary.setLastname(lastname);
-        beneficiary.setRelationship(relationship);
-        beneficiary.setState(state);
-        beneficiary.setAffiliateId(affiliateId);
-        return beneficiary;
     }
 }

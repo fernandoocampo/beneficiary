@@ -9,7 +9,6 @@ import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.BeneficiaryException;
 import com.example.beneficiary.model.Filter;
-import com.example.beneficiary.model.Result;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,15 +49,11 @@ public class BasicBeneficiaryService implements BeneficiaryService {
     }
 
     @Override
-    public Result search(Filter filter) throws BeneficiaryException {
+    public List<Beneficiary> search(Filter filter) throws BeneficiaryException {
         if(filter == null || filter.getAffiliateId() == null || 
                 filter.getAffiliateId().equals("")) {
             throw new BeneficiaryException("001", "Must provide a valid filter");
         }
-        Result<Beneficiary> result = new Result();
-        result.setCode("000");
-        List<Beneficiary> data = dao.findBeneficiaryByAffiliateId(filter.getAffiliateId());
-        result.setData(data);
-        return result;
+        return dao.findBeneficiaryByAffiliateId(filter.getAffiliateId());
     }
 }

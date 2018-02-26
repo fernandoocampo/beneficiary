@@ -8,7 +8,7 @@ package com.example.beneficiary.service;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.BeneficiaryException;
 import com.example.beneficiary.model.Filter;
-import com.example.beneficiary.model.Result;
+import java.util.List;
 
 /**
  * Defines the business logic for all the operations around a beneficiary.
@@ -55,5 +55,5 @@ public interface BeneficiaryService {
      * @return list of beneficiaries.
      * @throws BeneficiaryException 
      */
-    Result search(Filter filter) throws BeneficiaryException;
+    List<Beneficiary> search(Filter filter) throws BeneficiaryException;
 }
