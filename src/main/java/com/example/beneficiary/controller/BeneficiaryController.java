@@ -6,6 +6,7 @@
 package com.example.beneficiary.controller;
 
 import com.example.beneficiary.model.Beneficiary;
+import com.example.beneficiary.model.BeneficiaryDataException;
 import com.example.beneficiary.model.BeneficiaryException;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.Result;
@@ -67,10 +68,14 @@ public class BeneficiaryController {
         HttpStatus responseStatus = HttpStatus.OK;
         try {
             service.create(beneficiary);
-        } catch (BeneficiaryException ex) {
+        } catch (BeneficiaryDataException ex) {
             response.setCode(ex.getCode());
             response.setMessage(ex.getMessage());
             responseStatus = HttpStatus.BAD_REQUEST;
+        } catch (Exception ex) {
+            response.setCode("6001");
+            response.setMessage("Something goes wrong while trying to create a beneficiary");
+            responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(response, responseStatus);
     }

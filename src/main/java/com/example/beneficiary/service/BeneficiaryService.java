@@ -6,7 +6,7 @@
 package com.example.beneficiary.service;
 
 import com.example.beneficiary.model.Beneficiary;
-import com.example.beneficiary.model.BeneficiaryException;
+import com.example.beneficiary.model.BeneficiaryDataException;
 import com.example.beneficiary.model.Filter;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface BeneficiaryService {
      * @param beneficiary data for the beneficiary.
      * @throws BeneficiaryException if something goes wrong.
      */
-    void create(Beneficiary beneficiary) throws BeneficiaryException;
+    void create(Beneficiary beneficiary) throws BeneficiaryDataException;
     
     /**
      * Updates a beneficiary in the repository.
@@ -38,7 +38,7 @@ public interface BeneficiaryService {
      * @param beneficiary data to update in the beneficiary.
      * @throws BeneficiaryException if something goes wrong.
      */
-    void update(Beneficiary beneficiary) throws BeneficiaryException;
+    void update(Beneficiary beneficiary) throws BeneficiaryDataException;
     
     /**
      * Deletes a beneficiary from the repository.
@@ -46,7 +46,7 @@ public interface BeneficiaryService {
      * @param id from the beneficiary.
      * @throws BeneficiaryException if something goes wrong.
      */
-    void delete(String id) throws BeneficiaryException;
+    void delete(String id) throws BeneficiaryDataException;
     
     /**
      * Search and return a list of beneficiaries that matches the given filters.
@@ -55,5 +55,5 @@ public interface BeneficiaryService {
      * @return list of beneficiaries.
      * @throws BeneficiaryException 
      */
-    List<Beneficiary> search(Filter filter) throws BeneficiaryException;
+    List<Beneficiary> search(Filter filter) throws BeneficiaryDataException;
 }

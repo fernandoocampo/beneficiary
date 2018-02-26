@@ -109,7 +109,7 @@ public class BeneficiaryControllerShould {
     public void get_beneficiary_by_id() throws Exception {
         // GIVEN the following request to query an affiliatedid
         String affiliatedid = "1";
-        String expected = "{\"code\":10,\"message\":null,\"data\":{\"id\":\"1\",\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}}";
+        String expected = "{\"code\":null,\"message\":null,\"data\":{\"id\":\"1\",\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\",\"state\":1}}";
         
         Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "0001", "Frank",
                 "Sinatra", "son", "0001");
@@ -133,7 +133,7 @@ public class BeneficiaryControllerShould {
     public void create_a_beneficiary() throws Exception {
         // GIVEN the following request to create a beneficiary
         String requestbody = "{\"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Ocampo\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
-        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        String expected = "{\"code\":null,\"message\":null,\"data\":null}";
         
         Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "100532", "Fernando",
                 "Ocampo", "son", "0001");
@@ -149,6 +149,9 @@ public class BeneficiaryControllerShould {
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
+        System.out.println(expected);
+        System.out.println(result.getResponse().getContentAsString());
+        
         // THEN
         assertEquals(expected, result.getResponse().getContentAsString());
     }
@@ -160,7 +163,7 @@ public class BeneficiaryControllerShould {
     public void update_a_beneficiary() throws Exception {
         // GIVEN the following request to create a beneficiary
         String requestbody = "{\"id\":\"1003\", \"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Calero\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
-        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        String expected = "{\"code\":null,\"message\":null,\"data\":null}";
         
         Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "100532", "Fernando",
                 "Ocampo", "son", "0001");
@@ -187,7 +190,7 @@ public class BeneficiaryControllerShould {
     public void delete_a_beneficiary() throws Exception {
         // GIVEN the following request to query an affiliatedid
         String affiliatedid = "0001";
-        String expected = "{\"code\":10,\"message\":null,\"data\":null}";
+        String expected = "{\"code\":null,\"message\":null,\"data\":null}";
         
         // WHEN
         String request = "/beneficiaries/{id}";

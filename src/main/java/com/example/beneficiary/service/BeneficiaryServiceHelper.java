@@ -6,7 +6,7 @@
 package com.example.beneficiary.service;
 
 import com.example.beneficiary.model.Beneficiary;
-import com.example.beneficiary.model.BeneficiaryException;
+import com.example.beneficiary.model.BeneficiaryDataException;
 
 /**
  * checks if the beneficiary data and semantic is valid.
@@ -20,24 +20,24 @@ public class BeneficiaryServiceHelper {
      * 
      * @param beneficiary data for a beneficiary.
      * @param withID it states if the id must be validated as well (true).
-     * @throws BeneficiaryException if the given data is not right.
+     * @throws BeneficiaryDataException if the given data is not right.
      */
     protected static void checkBeneficiaryData(Beneficiary beneficiary, 
-            boolean withID) throws BeneficiaryException {
+            boolean withID) throws BeneficiaryDataException {
         if(beneficiary == null) {
-            throw new BeneficiaryException("001","Must provide data for the beneficiary");
+            throw new BeneficiaryDataException("001","Must provide data for the beneficiary");
         }
         
         if(!isValid(beneficiary.getAffiliateId())) {
-            throw new BeneficiaryException("002", "Beneficiary must have an affiliate id");
+            throw new BeneficiaryDataException("002", "Beneficiary must have an affiliate id");
         }
         
         if(!isValid(beneficiary.getCode())) {
-            throw new BeneficiaryException("003", "Beneficiary must have a code");
+            throw new BeneficiaryDataException("003", "Beneficiary must have a code");
         }
         
         if(withID && !isValid(beneficiary.getId())) {
-            throw new BeneficiaryException("004", "Must provide the id of the beneficiary");
+            throw new BeneficiaryDataException("004", "Must provide the id of the beneficiary");
         }
     }
     
