@@ -5,6 +5,8 @@
  */
 package com.example.beneficiary.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author fernando.ocampo
@@ -50,5 +52,38 @@ public class Result<T> {
     @Override
     public String toString() {
         return "Result{" + "code=" + code + ", message=" + message + ", data=" + data + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.code);
+        hash = 97 * hash + Objects.hashCode(this.message);
+        hash = 97 * hash + Objects.hashCode(this.data);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Result<?> other = (Result<?>) obj;
+        if (!Objects.equals(this.code, other.code)) {
+            return false;
+        }
+        if (!Objects.equals(this.message, other.message)) {
+            return false;
+        }
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        return true;
     }
 }

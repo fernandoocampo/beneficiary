@@ -7,8 +7,10 @@ package com.example.beneficiary.controller;
 
 import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
 import com.example.beneficiary.model.Beneficiary;
+import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BasicBeneficiaryService;
 import com.example.beneficiary.util.TestHelper;
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -93,8 +95,11 @@ public class BeneficiaryControllerShould {
         // execute the request.
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
+        Result expectedObject = new Gson().fromJson(expected, Result.class);
+        Result resultObject = new Gson().fromJson(result.getResponse().getContentAsString(), Result.class);
+        
         // THEN
-        assertEquals(expected, result.getResponse().getContentAsString());
+        assertEquals(expectedObject, resultObject);
     }
 
     /**
