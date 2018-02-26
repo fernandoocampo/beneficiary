@@ -35,7 +35,7 @@ To accomplish the above architecture design, we propose the following convention
 | Package name  | Description                                                                  |
 | ------------- | ---------------------------------------------------------------------------- |
 | `controller/` | Contains implementation of our web technologies such as REST, graphql or RPC.|
-| `/storage/`   | Code interfaces to define behavior and its implementations                   |
+| `/storage/`   | Code interfaces to define data access behavior and its implementations                   |
 | `model/`      | Defines java classes that behaves as value objects and used in business logic. Here we define our static business layer represented in data models. |
 | `service/`    | Defines the dynamic business layer, represented in behavior using functions or methods. Here we code interfaces and its implementations regarding our business logic.         |
 
