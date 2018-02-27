@@ -6,9 +6,9 @@
 package com.example.beneficiary.controller;
 
 import com.example.beneficiary.model.Beneficiary;
-import com.example.beneficiary.model.BeneficiaryDataException;
-import com.example.beneficiary.model.BeneficiaryException;
 import com.example.beneficiary.model.Filter;
+import com.example.beneficiary.model.InvalidDataException;
+import com.example.beneficiary.model.NotFoundException;
 import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BeneficiaryService;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class BeneficiaryController {
         try {
             List<Beneficiary> data = service.search(filter);
             response.setData(data);
-        } catch (BeneficiaryException ex) {
+        } catch (InvalidDataException ex) {
             response.setCode(ex.getCode());
             response.setMessage(ex.getMessage());
             response.setData(new ArrayList<>());
@@ -68,7 +68,7 @@ public class BeneficiaryController {
         HttpStatus responseStatus = HttpStatus.OK;
         try {
             service.create(beneficiary);
-        } catch (BeneficiaryDataException ex) {
+        } catch (InvalidDataException ex) {
             response.setCode(ex.getCode());
             response.setMessage(ex.getMessage());
             responseStatus = HttpStatus.BAD_REQUEST;
@@ -87,10 +87,14 @@ public class BeneficiaryController {
         HttpStatus responseStatus = HttpStatus.OK;
         try {
             service.update(beneficiary);
-        } catch (BeneficiaryException ex) {
+        } catch (InvalidDataException ex) {
             response.setCode(ex.getCode());
             response.setMessage(ex.getMessage());
             responseStatus = HttpStatus.BAD_REQUEST;
+        } catch (NotFoundException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage());
+            responseStatus = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(response, responseStatus);
     }
@@ -101,11 +105,14 @@ public class BeneficiaryController {
         HttpStatus responseStatus = HttpStatus.OK;
         try {
             service.delete(id);
-        } catch (BeneficiaryException ex) {
+        } catch (InvalidDataException ex) {
             response.setCode(ex.getCode());
-            response.setMessage(ex.getMessage()); 
-            response.setData(new ArrayList<>());
+            response.setMessage(ex.getMessage());
             responseStatus = HttpStatus.BAD_REQUEST;
+        } catch (NotFoundException ex) {
+            response.setCode(ex.getCode());
+            response.setMessage(ex.getMessage());
+            responseStatus = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(response, responseStatus);
     }

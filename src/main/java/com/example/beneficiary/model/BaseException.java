@@ -6,23 +6,28 @@
 package com.example.beneficiary.model;
 
 /**
- * Defines basic behavior for exceptions in beneficiary functionality.
+ * Base unchecked exception for all application errors.
  * 
- * @author Fernando.Ocampo
+ * @author fernando.ocampo
  */
-public class BeneficiaryException extends Exception {
+public class BaseException extends RuntimeException {
+    
     /**
-     * Exception code for the weird behavior.
+     * code to identify the application error.
      */
     private String code;
-        
-    public BeneficiaryException(String code, String message) {
+
+    public BaseException(String code) {
+        this.code = code;
+    }
+
+    public BaseException(String code, String message) {
         super(message);
         this.code = code;
     }
-    
-    public BeneficiaryException(String code, String message, Throwable ex) {
-        super(message, ex);
+
+    public BaseException(String code, String message, Throwable cause) {
+        super(message, cause);
         this.code = code;
     }
 
@@ -33,4 +38,6 @@ public class BeneficiaryException extends Exception {
     public void setCode(String code) {
         this.code = code;
     }
+    
+    
 }
