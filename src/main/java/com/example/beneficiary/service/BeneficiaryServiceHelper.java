@@ -53,4 +53,17 @@ public class BeneficiaryServiceHelper {
         }
         return valid;
     }
+    
+    /**
+     * Return true if the given long is a valid number.
+     * @param data String value
+     * @return true if the given long contains characters.
+     */
+    private static boolean isValid(Long data) {
+        boolean valid = true;
+        if(data == null) {
+            valid = false;
+        }
+        return valid;
+    }
 }

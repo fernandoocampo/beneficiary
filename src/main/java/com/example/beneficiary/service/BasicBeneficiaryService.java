@@ -5,7 +5,7 @@
  */
 package com.example.beneficiary.service;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
+import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.InvalidDataException;
@@ -23,29 +23,29 @@ import org.springframework.stereotype.Service;
 public class BasicBeneficiaryService implements BeneficiaryService {
     
     @Autowired
-    private BeneficiaryRepository dao;
+    private BeneficiaryDAO dao;
 
     @Override
-    public Beneficiary findById(String id) {
-        return dao.findBeneficiaryById(id);
+    public Beneficiary findById(Long id) {
+        return dao.findOne(id);
     }
 
     @Override
     public void create(Beneficiary beneficiary) {
         BeneficiaryServiceHelper.checkBeneficiaryData(beneficiary, false);
         beneficiary.setState(1);
-        dao.insert(beneficiary);
+        dao.create(beneficiary);
     }
 
     @Override
     public void update(Beneficiary beneficiary) {
         BeneficiaryServiceHelper.checkBeneficiaryData(beneficiary, true);        
-        dao.save(beneficiary);
+        dao.update(beneficiary);
     }
 
     @Override
-    public void delete(String id) {
-        dao.delete(id);
+    public void delete(Long id) {
+        dao.deleteById(id);
     }
 
     @Override

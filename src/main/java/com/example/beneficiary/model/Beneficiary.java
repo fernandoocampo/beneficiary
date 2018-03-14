@@ -7,33 +7,37 @@ package com.example.beneficiary.model;
 
 //import com.google.gson.Gson;
 //import com.google.gson.GsonBuilder;
+import java.io.Serializable;
 import java.util.Objects;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Models the data used for Beneficiaries.
  * 
  * @author fernando.ocampo
  */
-@Document(collection = "beneficiaries")
-public class Beneficiary {
+@Entity
+public class Beneficiary implements Serializable {
     @Id
-    private String id;
-    @Indexed(unique = true)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+    @Column(unique = true)
     private String code;
     private String forename;
     private String lastname;
     private String relationship;
-    private String affiliateId;
-    private Integer state;
+    private Long affiliateId;
+    private Integer stateValue;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,20 +73,20 @@ public class Beneficiary {
         this.relationship = relationship;
     }
 
-    public String getAffiliateId() {
+    public Long getAffiliateId() {
         return affiliateId;
     }
 
-    public void setAffiliateId(String affiliateId) {
+    public void setAffiliateId(Long affiliateId) {
         this.affiliateId = affiliateId;
     }
 
     public Integer getState() {
-        return state;
+        return stateValue;
     }
 
     public void setState(Integer state) {
-        this.state = state;
+        this.stateValue = state;
     }
 
     @Override
@@ -94,7 +98,7 @@ public class Beneficiary {
         hash = 59 * hash + Objects.hashCode(this.lastname);
         hash = 59 * hash + Objects.hashCode(this.relationship);
         hash = 59 * hash + Objects.hashCode(this.affiliateId);
-        hash = 59 * hash + Objects.hashCode(this.state);
+        hash = 59 * hash + Objects.hashCode(this.stateValue);
         return hash;
     }
 
@@ -128,7 +132,7 @@ public class Beneficiary {
         if (!Objects.equals(this.affiliateId, other.affiliateId)) {
             return false;
         }
-        if (!Objects.equals(this.state, other.state)) {
+        if (!Objects.equals(this.stateValue, other.stateValue)) {
             return false;
         }
         return true;
@@ -136,7 +140,7 @@ public class Beneficiary {
 
     @Override
     public String toString() {
-        return "Beneficiary{" + "id:" + id + ", code:" + code + ", forename:" + forename + ", lastname:" + lastname + ", relationship:" + relationship + ", affiliateId:" + affiliateId + ", state:" + state + '}';
+        return "Beneficiary{" + "id:" + id + ", code:" + code + ", forename:" + forename + ", lastname:" + lastname + ", relationship:" + relationship + ", affiliateId:" + affiliateId + ", state:" + stateValue + '}';
     }
     
 //    public static void main(String[] args) {

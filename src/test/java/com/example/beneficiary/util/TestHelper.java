@@ -14,9 +14,9 @@ import com.example.beneficiary.model.Beneficiary;
  */
 public class TestHelper {
     
-    public static Beneficiary createAnyBeneficiary(int state, String id, String code, 
+    public static Beneficiary createAnyBeneficiary(int state, Long id, String code, 
             String forename, String lastname, String relationship, 
-            String affiliateId) {
+            Long affiliateId) {
         
         Beneficiary beneficiary = new Beneficiary();
         beneficiary.setId(id);

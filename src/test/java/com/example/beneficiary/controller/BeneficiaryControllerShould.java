@@ -5,7 +5,7 @@
  */
 package com.example.beneficiary.controller;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
+import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BasicBeneficiaryService;
@@ -45,7 +45,7 @@ public class BeneficiaryControllerShould {
     private MockMvc mockMvc;
     
     @MockBean
-    private BeneficiaryRepository dao;
+    private BeneficiaryDAO dao;
     
     public BeneficiaryControllerShould() {
     }
@@ -73,14 +73,14 @@ public class BeneficiaryControllerShould {
     public void allow_to_search_by_affiliate_id() throws Exception {
         // GIVEN the following request body
         String requestbody = "{\"affiliateId\":\"0001\"}";
-        String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":\"1\",\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"},{\"id\":\"2\",\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}]}";
-        String affiliateid = "0001";
+        String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":1,\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"},{\"id\":2,\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}]}";
+        Long affiliateid = 1l;
 
         List<Beneficiary> daoMockedResult = new ArrayList<>();
-        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "1", "0001", "Frank",
-                "Sinatra", "son", "0001"));
-        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "2", "0002", "Paul",
-                "Anka", "son", "0001"));
+        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, 1l, "0001", "Frank",
+                "Sinatra", "son", 1l));
+        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, 2l, "0002", "Paul",
+                "Anka", "son", 1l));
         
         // WHEN
         String request = "/beneficiaries";
@@ -108,17 +108,17 @@ public class BeneficiaryControllerShould {
     @Test
     public void get_beneficiary_by_id() throws Exception {
         // GIVEN the following request to query an affiliatedid
-        String affiliatedid = "1";
-        String expected = "{\"code\":null,\"message\":null,\"data\":{\"id\":\"1\",\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\",\"state\":1}}";
+        Long affiliatedid = 1l;
+        String expected = "{\"code\":null,\"message\":null,\"data\":{\"id\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":1,\"state\":1}}";
         
-        Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "0001", "Frank",
-                "Sinatra", "son", "0001");
+        Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, 1l, "0001", "Frank",
+                "Sinatra", "son", 1l);
         
         // WHEN
         String request = "/beneficiaries/{id}";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request, affiliatedid);
         // mock the dao result.
-        Mockito.when(dao.findBeneficiaryById(affiliatedid)).thenReturn(returnedBeneficiary);
+        Mockito.when(dao.findOne(affiliatedid)).thenReturn(returnedBeneficiary);
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
@@ -132,11 +132,8 @@ public class BeneficiaryControllerShould {
     @Test
     public void create_a_beneficiary() throws Exception {
         // GIVEN the following request to create a beneficiary
-        String requestbody = "{\"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Ocampo\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
+        String requestbody = "{\"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Ocampo\", \"relationship\":\"son\", \"affiliateId\":1}";
         String expected = "{\"code\":null,\"message\":null,\"data\":null}";
-        
-        Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "100532", "Fernando",
-                "Ocampo", "son", "0001");
         
         // WHEN
         String request = "/beneficiaries";
@@ -145,7 +142,7 @@ public class BeneficiaryControllerShould {
                 .contentType("application/json")
                 .accept(MediaType.ALL);
         
-        Mockito.when(dao.insert(Mockito.any(Beneficiary.class))).thenReturn(returnedBeneficiary);
+        Mockito.doNothing().when(dao).create(Mockito.any(Beneficiary.class));
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
@@ -162,11 +159,8 @@ public class BeneficiaryControllerShould {
     @Test
     public void update_a_beneficiary() throws Exception {
         // GIVEN the following request to create a beneficiary
-        String requestbody = "{\"id\":\"1003\", \"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Calero\", \"relationship\":\"son\", \"affiliateId\":\"0001\"}";
+        String requestbody = "{\"id\":1003, \"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Calero\", \"relationship\":\"son\", \"affiliateId\":1}";
         String expected = "{\"code\":null,\"message\":null,\"data\":null}";
-        
-        Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, "1", "100532", "Fernando",
-                "Ocampo", "son", "0001");
         
         // WHEN
         String request = "/beneficiaries";
@@ -175,7 +169,7 @@ public class BeneficiaryControllerShould {
                 .contentType("application/json")
                 .accept(MediaType.ALL);
         
-        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(returnedBeneficiary);
+        Mockito.doNothing().when(dao.update(Mockito.any(Beneficiary.class)));
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
@@ -189,14 +183,14 @@ public class BeneficiaryControllerShould {
     @Test
     public void delete_a_beneficiary() throws Exception {
         // GIVEN the following request to query an affiliatedid
-        String affiliatedid = "0001";
+        Long affiliatedid = 1l;
         String expected = "{\"code\":null,\"message\":null,\"data\":null}";
         
         // WHEN
         String request = "/beneficiaries/{id}";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(request, affiliatedid);
         
-        Mockito.doNothing().when(dao).delete(affiliatedid);
+        Mockito.doNothing().when(dao).deleteById(affiliatedid);
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         

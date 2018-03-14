@@ -14,13 +14,13 @@ public class Filter {
     /**
      * It is the affiliate id.
      */
-    private String affiliateId;
+    private Long affiliateId;
 
-    public String getAffiliateId() {
+    public Long getAffiliateId() {
         return affiliateId;
     }
 
-    public void setAffiliateId(String affiliateId) {
+    public void setAffiliateId(Long affiliateId) {
         this.affiliateId = affiliateId;
     }
 }

@@ -24,7 +24,7 @@ public interface BeneficiaryService {
      * @param id
      * @return a beneficiary that has the given Id.
      */
-    Beneficiary findById(String id) throws InvalidDataException;
+    Beneficiary findById(Long id) throws InvalidDataException;
     
     /**
      * Creates a beneficiary in some repository. If 
@@ -49,7 +49,7 @@ public interface BeneficiaryService {
      * @throws InvalidDataException if given id is not valid.
      * @throws NotFoundException if a beneficiary with the given Id doesn't exist.
      */
-    void delete(String id) throws InvalidDataException, NotFoundException;
+    void delete(Long id) throws InvalidDataException, NotFoundException;
     
     /**
      * Search and return a list of beneficiaries that matches the given filters.

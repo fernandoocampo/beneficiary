@@ -56,7 +56,7 @@ public class BeneficiaryController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
         Result<Beneficiary> response = new Result();
-        Beneficiary data = service.findById(id);
+        Beneficiary data = service.findById(Long.parseLong(id));
         response.setData(data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -104,7 +104,7 @@ public class BeneficiaryController {
         Result response = new Result();
         HttpStatus responseStatus = HttpStatus.OK;
         try {
-            service.delete(id);
+            service.delete(Long.parseLong(id));
         } catch (InvalidDataException ex) {
             response.setCode(ex.getCode());
             response.setMessage(ex.getMessage());

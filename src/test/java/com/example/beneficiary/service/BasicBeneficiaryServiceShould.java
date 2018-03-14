@@ -5,7 +5,7 @@
  */
 package com.example.beneficiary.service;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
+import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.util.TestHelper;
 import org.junit.After;
@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BasicBeneficiaryServiceShould {
     
     @MockBean
-    private BeneficiaryRepository dao;
+    private BeneficiaryDAO dao;
     
     @Autowired
     private BasicBeneficiaryService service;
@@ -66,14 +66,12 @@ public class BasicBeneficiaryServiceShould {
         String forename = "Fernando";
         String lastname = "Ocampo";
         String relationship = "son";
-        String affiliateId = "1234-5678-9012";
+        Long affiliateId = 1l;
         Beneficiary newbeneficiary = TestHelper.createAnyBeneficiary(state, null, code, forename,
-                lastname, relationship, affiliateId);
-        Beneficiary returnbeneficiary = TestHelper.createAnyBeneficiary(state, null, code, forename,
                 lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
-        Mockito.when(dao.insert(Mockito.any(Beneficiary.class))).thenReturn(returnbeneficiary);
+        Mockito.doNothing().when(dao).create(Mockito.any(Beneficiary.class));
         
         try {
             service.create(newbeneficiary);
@@ -90,19 +88,17 @@ public class BasicBeneficiaryServiceShould {
     public void update_beneficiary() {
         // GIVEN the following beneficiary data
         int state = 1;
-        String id = "1999-2999-1922";
+        Long id = 2l;
         String code = "100";
         String forename = "Fernando";
         String lastname = "Ocampo";
         String relationship = "son";
-        String affiliateId = "1234-5678-9012";
+        Long affiliateId = 1l;
         Beneficiary newbeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
-                forename, lastname, relationship, affiliateId);
-        Beneficiary returnbeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
                 forename, lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
-        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(returnbeneficiary);
+        Mockito.doNothing().when(dao).update(Mockito.any(Beneficiary.class));
         
         try {
             service.create(newbeneficiary);
