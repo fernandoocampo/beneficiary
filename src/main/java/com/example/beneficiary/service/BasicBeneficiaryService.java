@@ -5,13 +5,14 @@
  */
 package com.example.beneficiary.service;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Filter;
 import com.example.beneficiary.model.InvalidDataException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
+import java.util.ArrayList;
 
 /**
  * Implements basic business logic for beneficiary service. It makes use of a
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class BasicBeneficiaryService implements BeneficiaryService {
     
     @Autowired
-    private BeneficiaryDAO dao;
+    private BeneficiaryRepository dao;
 
     @Override
     public Beneficiary findById(Long id) {
@@ -34,18 +35,18 @@ public class BasicBeneficiaryService implements BeneficiaryService {
     public void create(Beneficiary beneficiary) {
         BeneficiaryServiceHelper.checkBeneficiaryData(beneficiary, false);
         beneficiary.setState(1);
-        dao.create(beneficiary);
+        dao.save(beneficiary);
     }
 
     @Override
     public void update(Beneficiary beneficiary) {
         BeneficiaryServiceHelper.checkBeneficiaryData(beneficiary, true);        
-        dao.update(beneficiary);
+        dao.save(beneficiary);
     }
 
     @Override
     public void delete(Long id) {
-        dao.deleteById(id);
+        dao.delete(id);
     }
 
     @Override
@@ -54,6 +55,6 @@ public class BasicBeneficiaryService implements BeneficiaryService {
                 filter.getAffiliateId().equals("")) {
             throw new InvalidDataException("001", "Must provide a valid filter");
         }
-        return dao.findBeneficiaryByAffiliateId(filter.getAffiliateId());
+        return dao.findAll();
     }
 }

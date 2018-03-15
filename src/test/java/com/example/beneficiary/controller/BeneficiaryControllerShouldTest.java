@@ -5,11 +5,9 @@
  */
 package com.example.beneficiary.controller;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BasicBeneficiaryService;
-import com.example.beneficiary.mediation.storage.jpa.BeneficiaryDAOImpl;
 import com.example.beneficiary.util.TestHelper;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -32,6 +30,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
 
 /**
  * Test beneficiary controller.
@@ -39,14 +38,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author fernando.ocampo
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = {BeneficiaryController.class, BasicBeneficiaryService.class, BeneficiaryDAOImpl.class}, secure = false)
+@WebMvcTest(value = {BeneficiaryController.class, BasicBeneficiaryService.class}, secure = false)
 public class BeneficiaryControllerShouldTest {
     
     @Autowired
     private MockMvc mockMvc;
     
     @MockBean
-    private BeneficiaryDAO dao;
+    private BeneficiaryRepository dao;
     
     public BeneficiaryControllerShouldTest() {
     }
@@ -91,7 +90,7 @@ public class BeneficiaryControllerShouldTest {
                 .accept(MediaType.ALL);
         
         // mock the dao result.
-        Mockito.when(dao.findBeneficiaryByAffiliateId(affiliateid)).thenReturn(daoMockedResult);
+        Mockito.when(dao.findAll()).thenReturn(daoMockedResult);
         
         // execute the request.
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
@@ -143,7 +142,7 @@ public class BeneficiaryControllerShouldTest {
                 .contentType("application/json")
                 .accept(MediaType.ALL);
         
-        Mockito.doNothing().when(dao).create(Mockito.any(Beneficiary.class));
+        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(new Beneficiary());
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
@@ -174,7 +173,7 @@ public class BeneficiaryControllerShouldTest {
                 .contentType("application/json")
                 .accept(MediaType.ALL);
         
-        Mockito.when(dao.update(Mockito.any(Beneficiary.class))).thenReturn(returnedBeneficiary);
+        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(returnedBeneficiary);
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
@@ -195,7 +194,7 @@ public class BeneficiaryControllerShouldTest {
         String request = "/beneficiaries/{id}";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(request, affiliatedid);
         
-        Mockito.doNothing().when(dao).deleteById(affiliatedid);
+        Mockito.doNothing().when(dao).delete(affiliatedid);
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         

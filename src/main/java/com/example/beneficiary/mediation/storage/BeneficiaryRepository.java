@@ -6,25 +6,14 @@
 package com.example.beneficiary.mediation.storage;
 
 import com.example.beneficiary.model.Beneficiary;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Specifies the behavior for beneficiary data persistence.
  * 
  * @author fernando.ocampo
  */
-public interface BeneficiaryDAO {
-    Beneficiary findOne(Long id);
-
-    List<Beneficiary> findAll();
-
-    void create(Beneficiary entity);
-
-    Beneficiary update(Beneficiary entity);
-
-    void delete(Beneficiary entity);
-
-    void deleteById(Long entityId);
-    
-    List<Beneficiary> findBeneficiaryByAffiliateId(Long affiliatedId);
+@Repository
+public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> {
 }

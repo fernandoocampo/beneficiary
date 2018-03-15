@@ -5,7 +5,6 @@
  */
 package com.example.beneficiary.service;
 
-import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.util.TestHelper;
 import org.junit.After;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.example.beneficiary.mediation.storage.BeneficiaryRepository;
 
 /**
  * Test beneficiary service.
@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BasicBeneficiaryServiceShouldTest {
     
     @MockBean
-    private BeneficiaryDAO dao;
+    private BeneficiaryRepository dao;
     
     @Autowired
     private BasicBeneficiaryService service;
@@ -71,7 +71,7 @@ public class BasicBeneficiaryServiceShouldTest {
                 lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
-        Mockito.doNothing().when(dao).create(Mockito.any(Beneficiary.class));
+        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(new Beneficiary());
         
         try {
             service.create(newbeneficiary);
@@ -101,7 +101,7 @@ public class BasicBeneficiaryServiceShouldTest {
                 forename, lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
-        Mockito.when(dao.update(Mockito.any(Beneficiary.class))).thenReturn(updatedBeneficiary);
+        Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(updatedBeneficiary);
         
         try {
             service.update(beneficiaryToUpdate);
