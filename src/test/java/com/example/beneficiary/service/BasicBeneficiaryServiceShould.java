@@ -101,7 +101,7 @@ public class BasicBeneficiaryServiceShould {
         Mockito.doNothing().when(dao).update(Mockito.any(Beneficiary.class));
         
         try {
-            service.create(newbeneficiary);
+            service.update(newbeneficiary);
         } catch (Exception ex) {        
         // THEN must not be any error.
             fail("must not be any error and was threw this: " + ex.getMessage());

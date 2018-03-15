@@ -9,6 +9,7 @@ import com.example.beneficiary.mediation.storage.BeneficiaryDAO;
 import com.example.beneficiary.model.Beneficiary;
 import com.example.beneficiary.model.Result;
 import com.example.beneficiary.service.BasicBeneficiaryService;
+import com.example.beneficiary.mediation.storage.jpa.BeneficiaryDAOImpl;
 import com.example.beneficiary.util.TestHelper;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author fernando.ocampo
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = {BeneficiaryController.class, BasicBeneficiaryService.class}, secure = false)
+@WebMvcTest(value = {BeneficiaryController.class, BasicBeneficiaryService.class, BeneficiaryDAOImpl.class}, secure = false)
 public class BeneficiaryControllerShould {
     
     @Autowired
@@ -73,7 +74,7 @@ public class BeneficiaryControllerShould {
     public void allow_to_search_by_affiliate_id() throws Exception {
         // GIVEN the following request body
         String requestbody = "{\"affiliateId\":\"0001\"}";
-        String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":1,\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"},{\"id\":2,\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}]}";
+        String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":1,\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":1},{\"id\":2,\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":1}]}";
         Long affiliateid = 1l;
 
         List<Beneficiary> daoMockedResult = new ArrayList<>();
@@ -162,6 +163,10 @@ public class BeneficiaryControllerShould {
         String requestbody = "{\"id\":1003, \"code\":\"100532\", \"forename\":\"Fernando\", \"lastname\":\"Calero\", \"relationship\":\"son\", \"affiliateId\":1}";
         String expected = "{\"code\":null,\"message\":null,\"data\":null}";
         
+        // exptected beneficiary updated.
+        Beneficiary returnedBeneficiary = TestHelper.createAnyBeneficiary(1, 1003l, "100532", "Fernando",
+                "Calero", "son", 1l);
+        
         // WHEN
         String request = "/beneficiaries";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(request)
@@ -169,7 +174,7 @@ public class BeneficiaryControllerShould {
                 .contentType("application/json")
                 .accept(MediaType.ALL);
         
-        Mockito.doNothing().when(dao.update(Mockito.any(Beneficiary.class)));
+        Mockito.when(dao.update(Mockito.any(Beneficiary.class))).thenReturn(returnedBeneficiary);
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         
