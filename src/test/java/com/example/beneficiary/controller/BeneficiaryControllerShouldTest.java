@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = {BeneficiaryController.class, BasicBeneficiaryService.class, BeneficiaryDAOImpl.class}, secure = false)
-public class BeneficiaryControllerShould {
+public class BeneficiaryControllerShouldTest {
     
     @Autowired
     private MockMvc mockMvc;
@@ -48,7 +48,7 @@ public class BeneficiaryControllerShould {
     @MockBean
     private BeneficiaryDAO dao;
     
-    public BeneficiaryControllerShould() {
+    public BeneficiaryControllerShouldTest() {
     }
     
     @BeforeClass

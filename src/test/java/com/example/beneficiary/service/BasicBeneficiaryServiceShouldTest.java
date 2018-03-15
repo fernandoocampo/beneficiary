@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = BasicBeneficiaryService.class, secure = false)
-public class BasicBeneficiaryServiceShould {
+public class BasicBeneficiaryServiceShouldTest {
     
     @MockBean
     private BeneficiaryDAO dao;
@@ -36,7 +36,7 @@ public class BasicBeneficiaryServiceShould {
     @Autowired
     private BasicBeneficiaryService service;
     
-    public BasicBeneficiaryServiceShould() {
+    public BasicBeneficiaryServiceShouldTest() {
     }
     
     @BeforeClass
@@ -94,14 +94,17 @@ public class BasicBeneficiaryServiceShould {
         String lastname = "Ocampo";
         String relationship = "son";
         Long affiliateId = 1l;
-        Beneficiary newbeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
+        Beneficiary beneficiaryToUpdate = TestHelper.createAnyBeneficiary(state, id, code, 
+                forename, lastname, relationship, affiliateId);
+        
+        Beneficiary updatedBeneficiary = TestHelper.createAnyBeneficiary(state, id, code, 
                 forename, lastname, relationship, affiliateId);
         
         // WHEN the creation of a beneficiary is requested
-        Mockito.doNothing().when(dao).update(Mockito.any(Beneficiary.class));
+        Mockito.when(dao.update(Mockito.any(Beneficiary.class))).thenReturn(updatedBeneficiary);
         
         try {
-            service.update(newbeneficiary);
+            service.update(beneficiaryToUpdate);
         } catch (Exception ex) {        
         // THEN must not be any error.
             fail("must not be any error and was threw this: " + ex.getMessage());
