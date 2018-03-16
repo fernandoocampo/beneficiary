@@ -52,9 +52,9 @@ public class BasicBeneficiaryService implements BeneficiaryService {
     @Override
     public List<Beneficiary> search(Filter filter) {
         if(filter == null || filter.getAffiliateId() == null || 
-                filter.getAffiliateId().equals("")) {
+                filter.getAffiliateId() < 0) {
             throw new InvalidDataException("001", "Must provide a valid filter");
         }
-        return dao.findAll();
+        return dao.findBeneficiariesByAffiliateId(filter.getAffiliateId());
     }
 }

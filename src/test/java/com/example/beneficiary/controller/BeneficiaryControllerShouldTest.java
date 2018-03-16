@@ -90,7 +90,7 @@ public class BeneficiaryControllerShouldTest {
                 .accept(MediaType.ALL);
         
         // mock the dao result.
-        Mockito.when(dao.findAll()).thenReturn(daoMockedResult);
+        Mockito.when(dao.findBeneficiariesByAffiliateId(affiliateid)).thenReturn(daoMockedResult);
         
         // execute the request.
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
@@ -145,9 +145,6 @@ public class BeneficiaryControllerShouldTest {
         Mockito.when(dao.save(Mockito.any(Beneficiary.class))).thenReturn(new Beneficiary());
         
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-        
-        System.out.println(expected);
-        System.out.println(result.getResponse().getContentAsString());
         
         // THEN
         assertEquals(expected, result.getResponse().getContentAsString());

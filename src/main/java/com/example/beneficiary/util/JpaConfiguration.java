@@ -41,6 +41,8 @@ public class JpaConfiguration extends JpaBaseConfiguration {
         map.put(PersistenceUnitProperties.WEAVING, detectWeavingMode());
         map.put(PersistenceUnitProperties.DDL_GENERATION, env.getProperty("eclipselink.ddl.generation"));
         map.put(PersistenceUnitProperties.LOGGING_LEVEL, env.getProperty("eclipselink.logging.level"));
+        map.put(PersistenceUnitProperties.TARGET_DATABASE, env.getProperty("eclipselink.target-database"));
+        map.put(PersistenceUnitProperties.DDL_GENERATION_MODE, env.getProperty("eclipselink.ddl-generation.output-mode"));
         return map;
     }
 
