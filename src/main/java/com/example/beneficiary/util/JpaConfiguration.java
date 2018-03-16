@@ -40,6 +40,7 @@ public class JpaConfiguration extends JpaBaseConfiguration {
         HashMap<String, Object> map = new HashMap<>();
         map.put(PersistenceUnitProperties.WEAVING, detectWeavingMode());
         map.put(PersistenceUnitProperties.DDL_GENERATION, env.getProperty("eclipselink.ddl.generation"));
+        map.put(PersistenceUnitProperties.LOGGING_LEVEL, env.getProperty("eclipselink.logging.level"));
         return map;
     }
 
