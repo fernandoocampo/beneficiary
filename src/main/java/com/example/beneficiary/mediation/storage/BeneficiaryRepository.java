@@ -6,14 +6,15 @@
 package com.example.beneficiary.mediation.storage;
 
 import com.example.beneficiary.model.Beneficiary;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * Specifies the behavior for beneficiary data persistence.
  * 
  * @author fernando.ocampo
  */
-@Repository
 public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> {
+    
+    List<Beneficiary> findBeneficiariesByAffiliateId(Long affiliateId);
 }

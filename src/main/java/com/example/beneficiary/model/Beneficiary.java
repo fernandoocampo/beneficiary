@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Models the data used for Beneficiaries.
@@ -21,6 +23,9 @@ import javax.persistence.Id;
  * @author fernando.ocampo
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "beneficiary.findBeneficiariesByAffiliateId", query = "select b from Beneficiary b where b.affiliateId=:affiliateId")
+})
 public class Beneficiary implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
