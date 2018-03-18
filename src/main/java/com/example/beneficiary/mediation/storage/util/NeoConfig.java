@@ -1,4 +1,4 @@
-package com.example.beneficiary.util;
+package com.example.beneficiary.mediation.storage.util;
 
 import java.sql.SQLException;
 
@@ -15,7 +15,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
 
 @Configuration
-@Profile("int")
+@Profile("neo")
 public class NeoConfig {
     
     @Autowired

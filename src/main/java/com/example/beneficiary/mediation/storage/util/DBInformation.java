@@ -1,4 +1,4 @@
-package com.example.beneficiary.util;
+package com.example.beneficiary.mediation.storage.util;
 
 import java.io.StringWriter;
 import java.sql.Connection;

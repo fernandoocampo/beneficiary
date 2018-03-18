@@ -1,4 +1,4 @@
-package com.example.beneficiary.util;
+package com.example.beneficiary.mediation.storage.util;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.beans.factory.ObjectProvider;
