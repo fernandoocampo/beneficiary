@@ -44,6 +44,15 @@ To accomplish the above architecture design, we propose the following convention
 
 * Clone the project.
 
+* You must configure the HANA database driver at your own.
+
+    * Get the file ngdbc.jar
+    * execute the following command in the same folder where you put the jar file.
+
+    ```bash
+    mvn install:install-file -Dfile=ngdbc.jar -DgroupId=com.sap.db -DartifactId=hana -Dversion=1.120.6 -Dpackaging=jar -DgeneratePom=true
+    ```
+
 ### Development environment
 
 * Run maven clean and install
