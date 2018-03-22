@@ -8,6 +8,38 @@ This project shows how to implement a basic microservice using spring-boot. This
 * Show how to deploy a spring-boot project in NEO sap cloud.
 * Version: 0.1.0
 
+## How do I consume the APIs?
+
+* To create a beneficiary
+
+```bash
+
+```
+
+* To update a beneficiary
+
+```bash
+
+```
+
+* To delete a beneficiary
+
+```bash
+
+```
+
+* To search a beneficiary by its affiliateId
+
+```bash
+
+```
+
+* To find a beneficiary by its id
+
+```bash
+
+```
+
 ## Service architecture
 
 * This is a typical microservice implemented using Spring-boot.

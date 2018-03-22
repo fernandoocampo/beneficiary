@@ -71,7 +71,7 @@ public class BeneficiaryControllerShouldTest {
      */
     @Test
     public void allow_to_search_by_affiliate_id() throws Exception {
-        // GIVEN the following request body
+        // GIVEN the following expected result
         String requestbody = "{\"affiliateId\":\"0001\"}";
         String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":1,\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":1},{\"id\":2,\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":1}]}";
         Long affiliateid = 1l;
@@ -83,11 +83,8 @@ public class BeneficiaryControllerShouldTest {
                 "Anka", "son", 1l));
         
         // WHEN
-        String request = "/beneficiaries";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request)
-                .content(requestbody)
-                .contentType("application/json")
-                .accept(MediaType.ALL);
+        String request = "/beneficiaries?affiliateId=" + affiliateid;
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request);
         
         // mock the dao result.
         Mockito.when(dao.findBeneficiariesByAffiliateId(affiliateid)).thenReturn(daoMockedResult);

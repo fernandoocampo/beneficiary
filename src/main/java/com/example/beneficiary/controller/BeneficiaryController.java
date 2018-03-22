@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,11 +37,12 @@ public class BeneficiaryController {
     @Autowired
     private BeneficiaryService service;
     
-    @RequestMapping(value = "", method = RequestMethod.GET, 
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Result> search(@RequestBody Filter filter) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<Result> search(@RequestParam("affiliateId") Long affiliateId) {
         Result<List<Beneficiary>> response = new Result();
         HttpStatus responseStatus = HttpStatus.OK;
+        Filter filter = new Filter();
+        filter.setAffiliateId(affiliateId);
         try {
             List<Beneficiary> data = service.search(filter);
             response.setData(data);
