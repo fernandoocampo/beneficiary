@@ -6,7 +6,7 @@
     <groupId>com.example</groupId>
     <artifactId>beneficiary</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
+    <packaging>${packaging.type}</packaging>
 
     <name>beneficiary</name>
     <description>Demo project for Spring Boot</description>
@@ -102,6 +102,7 @@
             </activation>
             <properties>
                 <activatedProperties>dev</activatedProperties>
+                <packaging.type>jar</packaging.type>
             </properties>
         </profile>
             
@@ -112,6 +113,7 @@
             </activation>
             <properties>
                 <activatedProperties>int</activatedProperties>
+                <packaging.type>jar</packaging.type>
             </properties>
         </profile>
         
@@ -122,6 +124,7 @@
             </activation>
             <properties>
                 <activatedProperties>neo</activatedProperties>
+                <packaging.type>war</packaging.type>
             </properties>
             <dependencies>
                 <!--Contains the sap hana database drivers-->
@@ -156,6 +159,7 @@
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
+                <packaging.type>jar</packaging.type>
             </properties>
         </profile>
     </profiles>
