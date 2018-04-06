@@ -55,10 +55,20 @@ public class BeneficiaryController {
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
-        Result<Beneficiary> response = new Result();
+        ResponseEntity<Result> response;
+        
+        Result<Beneficiary> result = new Result();
+        
         Beneficiary data = service.findById(id);
-        response.setData(data);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        result.setData(data);
+        
+        if(data == null) {
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        } else {
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        
+        return response;
     }
     
     @RequestMapping(value = "", method = RequestMethod.POST, 
