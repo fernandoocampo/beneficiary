@@ -20,7 +20,7 @@ public interface BeneficiaryRepository
     
     Beneficiary findBeneficiaryById(String id);
     
-    @Query("{affiliateId:'?0'")
+    @Query("{ 'affiliateId' : ?0 }")
     List<Beneficiary> findBeneficiaryByAffiliateId(String affiliateId);
     
     
