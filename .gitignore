@@ -33,6 +33,8 @@ dist/
 nbdist/
 .nb-gradle/
 /nbproject/
+nbactions.xml
 
 ### generated after tests ###
 src/main/java/com/example/beneficiary/.DS_Store
+*.DS_Store
