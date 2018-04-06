@@ -71,23 +71,19 @@ public class BeneficiaryControllerShould {
      */
     @Test
     public void allow_to_search_by_affiliate_id() throws Exception {
-        // GIVEN the following request body
-        String requestbody = "{\"affiliateId\":\"0001\"}";
+        // GIVEN the following expected result
         String expected = "{\"code\":null,\"message\":null,\"data\":[{\"id\":\"1\",\"state\":1,\"code\":\"0001\",\"forename\":\"Frank\",\"lastname\":\"Sinatra\",\"relationship\":\"son\",\"affiliateId\":\"0001\"},{\"id\":\"2\",\"state\":1,\"code\":\"0002\",\"forename\":\"Paul\",\"lastname\":\"Anka\",\"relationship\":\"son\",\"affiliateId\":\"0001\"}]}";
         String affiliateid = "0001";
 
         List<Beneficiary> daoMockedResult = new ArrayList<>();
-        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "1", "0001", "Frank",
+        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "0005", "1", "Frank",
                 "Sinatra", "son", "0001"));
-        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "2", "0002", "Paul",
+        daoMockedResult.add(TestHelper.createAnyBeneficiary(1, "0006", "2", "Paul",
                 "Anka", "son", "0001"));
         
         // WHEN
-        String request = "/beneficiaries";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request)
-                .content(requestbody)
-                .contentType("application/json")
-                .accept(MediaType.ALL);
+        String request = "/beneficiaries?affiliateId=" + affiliateid;
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(request);
         
         // mock the dao result.
         Mockito.when(dao.findBeneficiaryByAffiliateId(affiliateid)).thenReturn(daoMockedResult);

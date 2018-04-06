@@ -21,26 +21,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * It is a REST interface to expose Beneficiary functionalities to the external 
+ * It is a REST interface to expose Beneficiary functionalities to the external
  * world.
- * 
+ *
  * @author fernando.ocampo
  */
 @RestController
 @RequestMapping("/beneficiaries")
 public class BeneficiaryController {
-    
+
     @Autowired
     private BeneficiaryService service;
-    
-    @RequestMapping(value = "", method = RequestMethod.GET, 
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Result> search(@RequestBody Filter filter) {
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<Result> search(@RequestParam("affiliateId") String affiliateId) {
         Result<List<Beneficiary>> response = new Result();
         HttpStatus responseStatus = HttpStatus.OK;
+        Filter filter = new Filter();
+        filter.setAffiliateId(affiliateId);
         try {
             List<Beneficiary> data = service.search(filter);
             response.setData(data);
@@ -52,26 +54,26 @@ public class BeneficiaryController {
         }
         return new ResponseEntity<>(response, responseStatus);
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Result> getBeneficiary(@PathVariable String id) {
         ResponseEntity<Result> response;
-        
+
         Result<Beneficiary> result = new Result();
-        
+
         Beneficiary data = service.findById(id);
         result.setData(data);
-        
-        if(data == null) {
+
+        if (data == null) {
             response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         } else {
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
-        
+
         return response;
     }
-    
-    @RequestMapping(value = "", method = RequestMethod.POST, 
+
+    @RequestMapping(value = "", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> create(@RequestBody Beneficiary beneficiary) {
         Result<Beneficiary> response = new Result();
@@ -89,8 +91,8 @@ public class BeneficiaryController {
         }
         return new ResponseEntity<>(response, responseStatus);
     }
-    
-    @RequestMapping(value = "", method = RequestMethod.PUT, 
+
+    @RequestMapping(value = "", method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> update(@RequestBody Beneficiary beneficiary) {
         Result<Beneficiary> response = new Result();
@@ -108,7 +110,7 @@ public class BeneficiaryController {
         }
         return new ResponseEntity<>(response, responseStatus);
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Result> delete(@PathVariable String id) {
         Result response = new Result();
