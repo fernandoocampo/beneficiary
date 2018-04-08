@@ -1,0 +1,34 @@
+
+version: '3'
+services:
+    # Launch vanilla mongo container
+    mongodb:
+        image: mongo:latest
+        container_name: "mongodb"
+        environment:
+          - MONGO_DATA_DIR=/data/db
+        ports:
+            - 27017:27017
+        command: mongod --smallfiles
+
+    # Load init data into mongo
+    mongo-init:
+        image: mongo:latest
+        command: >
+            mongoimport --host mongodb --db beneficiaries --collection beneficiaries --file /beneficiaries.json --jsonArray
+        links:
+            - mongodb
+        volumes:
+            - ./beneficiaries.json:/beneficiaries.json
+        depends_on:
+            - mongodb
+
+    # backend service
+    backend-svc:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        links:
+            - mongodb
+        ports:
+            - 8080:8080

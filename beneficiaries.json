@@ -1,0 +1,28 @@
+[
+    {
+        "code": "0001",
+        "forename": "ivan",
+        "lastname": "chaparro",
+        "relationship": "titular"
+    },
+    {
+        "code": "0002",
+        "forename": "andres",
+        "lastname": "chaparro",
+        "relationship": "son",
+        "affiliateId": "0001"
+    },
+    {
+        "code": "0003",
+        "forename": "cecilia",
+        "lastname": "botero",
+        "relationship": "titular"
+    },
+    {
+        "code": "0004",
+        "forename": "susana",
+        "lastname": "melo",
+        "relationship": "daugther",
+        "affiliateId": "0003"
+    }
+]
